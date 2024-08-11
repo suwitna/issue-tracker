@@ -2,9 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 
+interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  cardID: string;
+  phoneNo: string;
+  email: string;
+}
+
 const TripPage = () => {
   
-  const [trips, setTrips] = useState([]);
+  const [trips, setTrips] = useState<User[]>([]);
 
    //console.log(data.products);
    const fetchUsers = async () => {
@@ -40,7 +49,7 @@ const TripPage = () => {
               {
               trips.map(trip => (
                 <div key={trip._id} className="p-3 rounded-md shadow-md">
-                  <h3 className="font-bold">{trip.firstName}{trip.lastName}</h3>
+                  <h3 className="font-bold">{trip.firstName} {trip.lastName}</h3>
                   <p>Card ID: {trip.cardID}</p>
                   <p>Phone No: {trip.phoneNo}</p>
                   <p>e-Mail: {trip.email}</p>

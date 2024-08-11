@@ -1,23 +1,25 @@
 'use server';
 
-import { dbConnect } from "@/lib/mongodb";
-import { NextRequest, NextResponse } from "next/server";
-import User from "@/models/user";
+import { dbConnect } from '@/lib/mongodb';
+import { NextRequest, NextResponse } from 'next/server';
+import User from '@/models/user';
 import bcrypt from 'bcryptjs';
 
 dbConnect();
 export async function POST(req: NextRequest) {
 
     try {
-        const { firstName, lastName, cardID, phoneNo, email, password } = await req.json();
+        const { gender, firstName, lastName, cardID, phoneNo, email, password } = await req.json();
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        console.log("Gender: ", gender);
         console.log("Name: ", firstName, " ", lastName);
         console.log("Card ID: ", cardID);
         console.log("Phone No: ", phoneNo);
         console.log("Email: ", email);
         console.log("Password: ", password);
         console.log("hashedPassword: ", hashedPassword);
+        
             /*
         const user = await User.create(
             req.body,
@@ -26,14 +28,14 @@ export async function POST(req: NextRequest) {
         const checkUser = await User.findOne({email});
         if(checkUser){
             console.log("User: ", checkUser);
-            //return NextResponse.json({success:false, message : "ข้อผิดพลาด \"มีการลงทะเบียนด้วยอีเมล์ `${email}`\" นี้แล้ว"}, {status: 500});
-            return NextResponse.json({message: `${email}` + ' อีเมล์นี้ถูกใช้ลงทะเบียนแล้ว' }, { status: 409 });
+            return NextResponse.json({message: `${email}` + ' อีเมล์นี้ถูกใช้ลงทะเบียนแล้ว', error: '409' }, { status: 409 });
         }
 
         //const sess = await mongoose.startSession();
         //sess.startTransaction();
 
         const user = new User({
+            gender,
             firstName, 
             lastName, 
             cardID, 

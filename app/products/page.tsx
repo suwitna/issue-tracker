@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-/*
+
 interface Product{
     id: number;
     title: string;
@@ -15,13 +15,13 @@ interface Product{
     price: string;
     stock: string;
 }
-*/
+
 const ProductPage = () => {
     //const res = await fetch("https://dummyjson.com/products");
     //const data = await res.json();
     //const products = data.products;
 
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
     //const [error, setError] = useState('');
 
     //console.log(data.products);

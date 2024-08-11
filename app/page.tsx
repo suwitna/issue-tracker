@@ -3,8 +3,21 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+
+interface Product{
+  id: number;
+  title: string;
+  email: string;
+  images: string;
+  description: string;
+  brand: string;
+  category: string;
+  price: string;
+  stock: string;
+}
+
 export default function Home() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState('');
   //console.log('Products state:', products);
 

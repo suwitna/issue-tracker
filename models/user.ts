@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import mongoose, {Schema} from "mongoose";
 /*
 const userSchema = new Schema(
@@ -38,9 +37,10 @@ userSchema.set('toJSON', {
         delete ret.hash;
     }
 });
-*/
 
+*/
 const userSchema = new Schema({
+    gender: { type: String, required: true },
     firstName: { type: String, required: true }, 
     lastName: { type: String, required: true }, 
     cardID: { type: String, required: true }, 
