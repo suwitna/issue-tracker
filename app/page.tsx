@@ -52,7 +52,7 @@ export default function Home() {
         {products.map(product => (
           <div key={product.id} className="p-3 rounded-md shadow-md">
             <h3 className="font-bold">{product.title}</h3>
-            <Image src={product.images[0]} width={300} height={150} alt={product.title}/>
+            <Image src={product.images[0]} width={300} height={150} alt={product.title} priority={true}/>
             <p>Description: {product.description}</p>
             <p>Brand: {product.brand}</p>
             <p>Category: {product.category}</p>

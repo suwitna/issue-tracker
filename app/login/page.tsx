@@ -23,7 +23,6 @@ const LoginPage = () => {
       e.preventDefault();
 
       try {
-
           const res = await signIn("credentials", {
             email, password, redirect: false
           });
@@ -32,7 +31,6 @@ const LoginPage = () => {
               setError("อีเมล หรือ รหัสผ่านไม่ถูกต้อง");
               return;
           }
-          
           router.replace("trips");
 
       } catch(error) {
@@ -45,7 +43,7 @@ const LoginPage = () => {
         <div className='flex-grow'>
             <div className="flex justify-center items-center">
                 <div className='w-[400px] shadow-xl p-10 mt-5 rounded-xl'>
-                    <h3 className='text-3xl'>Login Page</h3>
+                    <h3 className='text-3xl'>เข้าสู่ระบบ</h3>
                     <hr className='my-3' />
                     <form onSubmit={handleSubmit}>
                         {error && (

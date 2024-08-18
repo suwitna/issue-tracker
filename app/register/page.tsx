@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Container from '@/app/components/Container';
 import { validatePassword } from '@/app/utils/validatePassword';
+import axios from 'axios';
 
 const RegisterPage = () => {
   const [gender, setGender] = useState("");
@@ -71,6 +72,7 @@ const RegisterPage = () => {
     } 
 
     try {
+      /*
       const res = await fetch("http://localhost:3000/api/register", {
           method: "POST",
           headers: {
@@ -80,14 +82,20 @@ const RegisterPage = () => {
             gender, firstName, lastName, cardID, phoneNo, email, password
           })
       })
+      */
+      const res = await axios.post('http://localhost:3000/api/register', {
+        gender, firstName, lastName, cardID, phoneNo, email, password
+      });
 
-      if(res.ok){
+      //if(res.ok){
+        if(res.data){
         const form = e.target;
         clearState();
         setSuccess("User registration successfully!");
         form.reset();
       } else {
-        const result = await res.json();
+        //const result = await res.json();
+        const result = await res.data;
         console.log("User registration failed.", result);
         if(result.error! && result.error == '409'){
           setError(result.message);

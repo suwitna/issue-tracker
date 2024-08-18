@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
+import CusCalendar from '@/app/utils/CusCalendar';
+import axios from "axios";
 
 interface User {
   _id: string;
@@ -18,12 +20,16 @@ const TripPage = () => {
    //console.log(data.products);
    const fetchUsers = async () => {
     try{
+      /* 
       const res = await fetch("http://localhost:3000/api/register", {
-        cache: "no-store",
-      });
-      const data = await res.json();
-      if(res.ok){
-          console.log(data.data);
+          cache: "no-store",
+        });
+        */
+      const res = await axios.get('http://localhost:3000/api/register');
+      //const data = await res.json();
+      const data = await res.data;
+      if(data.success){
+          console.log('Axios get: ', data);
           //const products:Product[] = data.products;
           setTrips(data.data);
       } else {
@@ -57,6 +63,7 @@ const TripPage = () => {
               ))
               }
           </div>
+          <CusCalendar/>
       </div>
   </>
   )
