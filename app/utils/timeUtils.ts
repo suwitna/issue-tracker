@@ -29,13 +29,24 @@ export function getMinutes(start: string, end: string) {
   return (eh * 60 + em) - (sh * 60 + sm);
 }
 
+// parseTime: แปลง HH:mm:ss เป็น นาทีทศนิยม
 export function parseTime(time: string): number {
-  const [h, m] = time.split(':').map(Number);
-  return h * 60 + m;
+  const [hh, mm, ss] = time.split(':').map(Number);
+  return hh * 60 + mm + (ss ?? 0) / 60;
 }
 
+//parseTime: แปลง HH:mm:ss เป็น นาที
+export function parseTimeToMin(str: string): number {
+  const [h, m, s = 0] = str.split(':').map(Number);
+  return h * 60 + m + s / 60;
+}
+
+// formatDurationHMS: แปลงนาที (ทศนิยม) เป็น HH:mm:ss
 export function formatDurationHMS(minutes: number): string {
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  return `${h}:${m.toString().padStart(2, '0')}`;
+  const totalSeconds = Math.round(minutes * 60);
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+
+  return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }

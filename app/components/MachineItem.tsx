@@ -2,11 +2,11 @@ import React from 'react';
 import { TimeScale } from './TimeScale';
 import { StatusBlockWithTooltip } from './StatusBlockWithTooltip';
 import { MachineLog, MachineStatus } from '../../models/mockData';
-import { parseTime, getMinutes, formatDurationHMS } from '../utils/timeUtils';
+import { parseTime, parseTimeToMin, getMinutes, formatDurationHMS } from '../utils/timeUtils';
 
 export interface HighlightRange {
-  start: string; // เช่น "10:00"
-  end: string;   // เช่น "10:15"
+  start: string; // เช่น "10:00:00"
+  end: string;   // เช่น "10:15:00"
   color?: string; // เช่น "bg-yellow-200"
 }
 
@@ -15,8 +15,8 @@ export interface MachineItemProps {
   leftColWidth?: number;
   rightColWidth?: number;
   chartHeight?: number;
-  startHour?: number;
-  endHour?: number;
+  startHour?: string;
+  endHour?: string;
   showTooltip?: boolean;
   showTimeScale?: boolean;
   statusColorMap?: Partial<Record<MachineStatus, string>>;
@@ -24,23 +24,25 @@ export interface MachineItemProps {
 }
 
 const defaultStatusColorMap: Record<MachineStatus, string> = {
-  running: 'bg-green-500',
+  running: 'bg-green-600',
   stop: 'bg-red-500',
-  off: 'bg-black',
+  off: 'bg-gray-700',
 };
 export const MachineItem: React.FC<MachineItemProps> = ({
   log,
   leftColWidth = 150,
   rightColWidth = 420,
   chartHeight = 60,
-  startHour = 8,
-  endHour = 14,
+  startHour = '8:00:00',
+  endHour = '14:15:00',
   showTooltip = true,
   showTimeScale = true,
   statusColorMap = defaultStatusColorMap,
   highlightRanges = [],
 }) => {
-  const totalMinutes = (endHour - startHour) * 60;
+  const startMinutes = parseTimeToMin(startHour);
+  const endMinutes = parseTimeToMin(endHour);
+  const totalMinutes = endMinutes - startMinutes;
 
   return (
     <div
@@ -49,9 +51,9 @@ export const MachineItem: React.FC<MachineItemProps> = ({
     >
       {/* ✅ Highlight Background Blocks (แทรกด้านนอกสุด แต่ absolute) */}
       {highlightRanges.map((range, i) => {
-        const startMin = parseTime(range.start);
-        const endMin = parseTime(range.end);
-        const offset = ((startMin - startHour * 60) / totalMinutes) * rightColWidth;
+        const startMin = parseTimeToMin(range.start);
+        const endMin = parseTimeToMin(range.end);
+        const offset = ((startMin - startMinutes) / totalMinutes) * rightColWidth;
         const width = ((endMin - startMin) / totalMinutes) * rightColWidth;
 
         return (
@@ -59,7 +61,7 @@ export const MachineItem: React.FC<MachineItemProps> = ({
             key={i}
             className={`${range.color ?? 'bg-yellow-200'} absolute opacity-60 z-0`}
             style={{
-              left: leftColWidth + offset + 29,
+              left: leftColWidth + offset + 20,
               width: width,
               top: 0,
               bottom: 0,
@@ -69,7 +71,7 @@ export const MachineItem: React.FC<MachineItemProps> = ({
       })}
 
       {/* ✅ Main content */}
-      <div className="flex items-center space-x-4 w-full p-3 relative z-10">
+      <div className="flex items-center space-x-4 w-full p-1 relative z-10">
         {/* 👈 Left Column */}
         <div
           className="text-right font-semibold whitespace-nowrap pr-4"
@@ -88,7 +90,7 @@ export const MachineItem: React.FC<MachineItemProps> = ({
             {log.timeline.map((block, i) => {
               const startMinutes = parseTime(block.start);
               const originalEndMinutes = parseTime(block.end);
-              const maxMinutes = endHour * 60;
+              const maxMinutes = endMinutes;
 
               if (startMinutes >= maxMinutes) return null;
 
@@ -132,6 +134,7 @@ export const MachineItem: React.FC<MachineItemProps> = ({
                 width={rightColWidth}
                 startHour={startHour}
                 endHour={endHour}
+                highlightRanges ={highlightRanges}
               />
             </div>
           )}
