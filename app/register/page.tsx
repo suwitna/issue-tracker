@@ -1,9 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react'
-import Container from '@/app/components/Container';
-import { validatePassword } from '@/app/utils/validatePassword';
+import dynamic from "next/dynamic";
+//import Container from '@/app/components/Container';
+//import { validatePassword } from '@/app/utils/validatePassword';
 import axios from 'axios';
+
+const Container = dynamic(() => import("@/app/components/Container"), { ssr: false });
+const validatePassword: any = dynamic(() => import('@/app/utils/validatePassword').then((module) => module.validatePassword),{ ssr: false});
 
 const RegisterPage = () => {
   const [gender, setGender] = useState("");

@@ -8,6 +8,7 @@ import classnames from 'classnames'
 import { Button } from '@radix-ui/themes';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
+import ThemeSwitcher from './components/ThemeSwitcher';
 
 const NavBar = () => {
   const { data: session } = useSession();
@@ -18,6 +19,8 @@ const NavBar = () => {
       {label: 'Issues', href: '/issues'},
       {label: 'Products', href: '/products'},
       {label: 'ทริป', href: '/trips'},
+      {label: 'สมาชิก', href: '/users'},
+      {label: 'กราฟ', href: '/charts'},
   ]
   
   return (
@@ -70,6 +73,9 @@ const NavBar = () => {
             </div>
           </>
          )}
+         <div>
+          <ThemeSwitcher/>
+         </div>
       </div>
         
     </nav>

@@ -4,14 +4,14 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { dbConnect } from "@/lib/mongodb";
 import User from '@/models/user';
 import bcrypt from 'bcryptjs';
-import { compare } from 'bcryptjs';
 
 const authOptions : AuthOptions = {
     providers: [
         CredentialsProvider({
             name: 'credentials',
-            credentials: {},
-            async authorize(credentials, req) {
+            credentials: {
+            },
+            async authorize(credentials: any, req) {
                 
                 const { email, password } = credentials;
                 

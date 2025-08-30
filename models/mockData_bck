@@ -1,0 +1,101 @@
+export type MachineStatus = 'running' | 'stop' | 'idle' | 'off';
+
+export interface MachineLogBlock {
+  start: string;
+  end: string;
+  status: MachineStatus;
+  duration?: string;
+}
+
+export interface MachineLog {
+  machine: string;
+  timeline: MachineLogBlock[];
+}
+
+// Format 08:30 etc.
+function formatTime(minutes: number): string {
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+}
+
+function randomStatus(): MachineStatus {
+  return Math.random() > 0.5 ? 'running' : 'stop';
+}
+
+// Randomly pick 2 indexes to be "no idle"
+const noIdleIndexes = new Set<number>();
+while (noIdleIndexes.size < 2) {
+  const rnd = Math.floor(Math.random() * 10);
+  if (![5, 7, 8].includes(rnd)) {
+    noIdleIndexes.add(rnd);
+  }
+}
+
+function generateTimeline(index: number): MachineLogBlock[] {
+  const timeline: MachineLogBlock[] = [];
+  const start = 8 * 60;
+  const end = 14 * 60;
+  let current = start;
+
+  const forceNoIdle = noIdleIndexes.has(index);
+  let idleInserted = false;
+
+  while (current < end && timeline.length < 40) {
+    const segment = Math.floor(Math.random() * 10 + 5); // 5–15 min
+    const next = Math.min(current + segment, end);
+
+    // Force "off" for machine 6/8/9
+    if ([5, 7, 8].includes(index)) {
+      if (current < 13 * 60 && next > 12 * 60) {
+        if (current < 12 * 60) {
+          timeline.push({
+            start: formatTime(current),
+            end: formatTime(12 * 60),
+            status: randomStatus(),
+          });
+        }
+        timeline.push({
+          start: '12:00',
+          end: '13:20',
+          status: 'off',
+        });
+        current = 13 * 60 + 20;
+        continue;
+      }
+    }
+
+    // Idle 12:00–13:00 (except forceNoIdle)
+    if (!forceNoIdle && !idleInserted && current < 12 * 60 && next > 12 * 60) {
+      if (current < 12 * 60) {
+        timeline.push({
+          start: formatTime(current),
+          end: formatTime(12 * 60),
+          status: randomStatus(),
+        });
+      }
+      timeline.push({
+        start: '12:00',
+        end: '13:00',
+        status: 'idle',
+      });
+      current = 13 * 60;
+      idleInserted = true;
+      continue;
+    }
+
+    timeline.push({
+      start: formatTime(current),
+      end: formatTime(next),
+      status: randomStatus(),
+    });
+    current = next;
+  }
+
+  return timeline;
+}
+
+export const mockMachineLogs: MachineLog[] = Array.from({ length: 10 }, (_, i) => ({
+  machine: `CNC-MACHINE-${(i + 1).toString().padStart(3, '0')}`,
+  timeline: generateTimeline(i),
+}));

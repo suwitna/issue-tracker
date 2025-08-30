@@ -1,5 +1,5 @@
 'use client';
-
+/*
 import { Button, Callout, TextField, Text } from '@radix-ui/themes'
 import SimpleMDE from "react-simplemde-editor";
 import { useForm, Controller} from 'react-hook-form';
@@ -60,6 +60,19 @@ const NewIssuePage = () => {
           Submit New Issue {isSubmitting && <Spinner/>}
         </Button>
       </form>
+    </div>
+  )
+}
+
+export default NewIssuePage
+*/
+
+import React from 'react'
+
+const NewIssuePage = () => {
+  return (
+    <div>
+      NewIssuePage
     </div>
   )
 }
