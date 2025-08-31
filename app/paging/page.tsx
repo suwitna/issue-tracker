@@ -7,25 +7,31 @@ import { MachineList } from '../components/MachineList';
 export default function MachineTimeline() {
   return (
     <MachineList 
-      logs={mockMachineLogs} 
-      leftColWidth={180}
-      rightColWidth={500}
-      chartHeight={30}
-      startHour={'8:00:00'}
-      endHour={'14:15:00'}
-      showTooltip={true}
-      showTimeScale={true}
-      highlightRanges={[
+      logs={mockMachineLogs}  // (1)
+      leftColWidth={180}      // (2)
+      rightColWidth={500}     // (3)
+      chartHeight={30}        // (4)
+      startHour={'8:00:00'}   // (5)
+      endHour={'14:15:00'}    // (6)
+      showTooltip={true}      // (7)
+      showTimeScale={true}    // (8)
+      highlightRanges={[      // (9)
         { start: '10:00:00', end: '10:15:00', color: 'bg-yellow-200' }, //เวลาพักน้อย
         { start: '12:00:00', end: '13:00:00', color: 'bg-yellow-200' }, //เวลาพักกลางวัน
         { start: '14:14:00', end: '14:15:00', color: 'bg-red-500' }, // เวลาเลิกงาน
       ]}
-      statusColorMap={{
-        running: 'bg-green-600',
-        stop: 'bg-red-500',
-        off: 'bg-gray-700',
+      statusColorMap={{       // (10)
+        running: 'bg-green-600', // ✅ running
+        stop: 'bg-red-500',      // 🛑 stop
+        off: 'bg-gray-700',      // ⚫ off
       }}
-      showPaging={{ show: true, showTopPage: false, position: 'right', itemsPerPage: 8, scrollToTop: false }}
+      showPaging={{           // (11)
+        show: true, 
+        showTopPage: false, 
+        position: 'right', 
+        itemsPerPage: 8, 
+        scrollToTop: false 
+      }}
     />
   );
 }

@@ -121,6 +121,17 @@ export const mockMachineLogs: MachineLog[] = Array.from({ length: 214 }, (_, i) 
 
 
 {/*
+  // 1. Type Definition (ใน TypeScript)
+  type MachineLog = {
+    machine: string;
+    timeline: {
+      start: string;   // 'HH:mm:ss'
+      end: string;     // 'HH:mm:ss'
+      status: 'running' | 'stop' | 'off';
+    }[];
+  };
+  
+  // 2. Sample JSON Object (สำหรับใช้จริง)
   [
   {
     "machine": "CNC-MACHINE-001",
@@ -131,5 +142,6 @@ export const mockMachineLogs: MachineLog[] = Array.from({ length: 214 }, (_, i) 
     ]
   }
 ]
+
 
   */}
