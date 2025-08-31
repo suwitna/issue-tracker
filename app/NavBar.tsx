@@ -21,6 +21,7 @@ const NavBar = () => {
       {label: 'ทริป', href: '/trips'},
       {label: 'สมาชิก', href: '/users'},
       {label: 'กราฟ', href: '/charts'},
+      {label: 'รายการ', href: '/paging'},
   ]
   
   return (

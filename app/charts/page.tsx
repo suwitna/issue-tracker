@@ -14,9 +14,10 @@ export default function MachineTimeline() {
         chartHeight={30}
         startHour={'8:00:00'}
         endHour={'14:15:00'}
-        showTooltip={false}
+        showTooltip={true}
         showTimeScale={true}
         highlightRanges={[
+          { start: '08:00:00', end: '08:15:00', color: 'bg-yellow-200' },
           { start: '10:00:00', end: '10:15:00', color: 'bg-yellow-200' },
           { start: '12:00:00', end: '13:00:00', color: 'bg-yellow-200' },
           { start: '14:14:00', end: '14:15:00', color: 'bg-red-500' },

@@ -114,7 +114,7 @@ function generateTimeline(index: number): MachineLogBlock[] {
 }
 
 
-export const mockMachineLogs: MachineLog[] = Array.from({ length: 10 }, (_, i) => ({
+export const mockMachineLogs: MachineLog[] = Array.from({ length: 214 }, (_, i) => ({
   machine: `CNC-MACHINE-${(i + 1).toString().padStart(3, '0')}`,
   timeline: generateTimeline(i),
 }));
