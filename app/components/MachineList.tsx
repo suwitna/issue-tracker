@@ -13,6 +13,8 @@ export interface showPaging {
   show: boolean;
   showTopPage: boolean;
   position?: 'left' | 'center' | 'right'; // ✅ แคบลงแบบนี้
+  itemsPerPage: number;
+  scrollToTop: boolean;
 }
 
 interface MachineListProps {
@@ -26,7 +28,6 @@ interface MachineListProps {
     showTimeScale?: boolean;
     statusColorMap?: Partial<Record<MachineStatus, string>>;
     highlightRanges?: HighlightRange[]; // 👈 เพิ่มพารามิเตอร์ใหม่
-    itemsPerPage?: number;
     showPaging?: showPaging;
 }
 
@@ -47,15 +48,14 @@ export const MachineList: React.FC<MachineListProps> = ({
   showTimeScale = true,
   statusColorMap = defaultStatusColorMap,
   highlightRanges = [],
-  itemsPerPage = 10,
-  showPaging = { show: false, showTopPage: false, position: 'center' },
+  showPaging = { show: false, showTopPage: false, position: 'center', itemsPerPage:10, scrollToTop: false},
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(logs.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
+  const totalPages = Math.ceil(logs.length / showPaging?.itemsPerPage);
+  const startIndex = (currentPage - 1) * showPaging?.itemsPerPage;
   const currentLogs = showPaging?.show
-    ? logs.slice(startIndex, startIndex + itemsPerPage)
+    ? logs.slice(startIndex, startIndex + showPaging?.itemsPerPage)
     : logs;
 
   return (
@@ -69,6 +69,7 @@ export const MachineList: React.FC<MachineListProps> = ({
           leftColWidth={leftColWidth}
           rightColWidth={rightColWidth}
           position={showPaging.position}
+          scroll={showPaging.scrollToTop}
         />
       )}
 
@@ -97,6 +98,7 @@ export const MachineList: React.FC<MachineListProps> = ({
           leftColWidth={leftColWidth}
           rightColWidth={rightColWidth}
           position={showPaging.position}
+          scroll={showPaging.scrollToTop}
         />
       )}
     </div>

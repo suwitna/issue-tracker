@@ -16,18 +16,16 @@ export default function MachineTimeline() {
       showTooltip={true}
       showTimeScale={true}
       highlightRanges={[
-        { start: '08:00:00', end: '08:15:00', color: 'bg-yellow-200' },
-        { start: '10:00:00', end: '10:15:00', color: 'bg-yellow-200' },
-        { start: '12:00:00', end: '13:00:00', color: 'bg-yellow-200' },
-        { start: '14:14:00', end: '14:15:00', color: 'bg-red-500' },
+        { start: '10:00:00', end: '10:15:00', color: 'bg-yellow-200' }, //เวลาพักน้อย
+        { start: '12:00:00', end: '13:00:00', color: 'bg-yellow-200' }, //เวลาพักกลางวัน
+        { start: '14:14:00', end: '14:15:00', color: 'bg-red-500' }, // เวลาเลิกงาน
       ]}
       statusColorMap={{
         running: 'bg-green-600',
         stop: 'bg-red-500',
         off: 'bg-gray-700',
       }}
-      itemsPerPage={5}
-      showPaging={{ show: true, showTopPage: true, position: 'right' }}
+      showPaging={{ show: true, showTopPage: false, position: 'right', itemsPerPage: 8, scrollToTop: false }}
     />
   );
 }

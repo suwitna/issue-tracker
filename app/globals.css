@@ -89,3 +89,67 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+@media print {
+  /* ซ่อนเมนู, ปุ่ม Pagination, หรือส่วนที่ไม่ต้องการพิมพ์ */
+  /*nav, */
+  /*.pagination, */
+  /*button, */
+  input[type="number"], 
+  input[type="text"] {
+    display: none !important;
+  }
+
+  /* ปรับขนาดฟอนต์ให้เหมาะกับการพิมพ์ */
+  body {
+     -webkit-print-color-adjust: exact; /* ให้สีพิมพ์ตรงกับหน้าจอ */
+    print-color-adjust: exact;
+    font-size: 12pt;
+    color: #000; /* กำหนดสีดำ เพื่อความคมชัด */
+    background: none !important;
+  }
+
+  footer {
+    display: none !important;
+  }
+  /* จัด layout ให้เต็มหน้ากระดาษ */
+  .container{
+    page-break-after: avoid;
+  }
+  .machine-list-wrapper {
+    width: 100% !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ปรับความกว้างของคอลัมน์สำหรับการพิมพ์ */
+  .left-col {
+    width: 150px !important;
+  }
+  
+  .right-col {
+    width: auto !important;
+  }
+
+  /* ปรับสีแท่งสถานะให้แสดงผลดีบนกระดาษ */
+  .status-running {
+    background-color: #00b300 !important;
+  }
+  .status-stop {
+    background-color: #e60000 !important;
+  }
+  .status-off {
+    background-color: #555 !important;
+  }
+
+  /* ปรับ tooltip หรือ element ที่ลอยขึ้น */
+  .tooltip {
+    display: none !important;
+  }
+
+  /* ปรับเวลาบนแกนเวลาให้เห็นชัดเจน */
+  .time-scale {
+    font-size: 10pt !important;
+    color: #000 !important;
+  }
+}
