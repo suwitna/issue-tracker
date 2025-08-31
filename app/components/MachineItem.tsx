@@ -1,6 +1,6 @@
 import React from 'react';
 import { TimeScale } from './TimeScale';
-import { StatusBlockWithTooltip } from './StatusBlockWithTooltip';
+import { MachineStatusBar } from './MachineStatusBar';
 import { MachineLog, MachineStatus } from '../../models/mockData';
 import { parseTime, parseTimeToMin, getMinutes, formatDurationHMS } from '../utils/timeUtils';
 
@@ -100,30 +100,16 @@ export const MachineItem: React.FC<MachineItemProps> = ({
 
               const blockWidth = (duration / totalMinutes) * 100;
 
-              return showTooltip ? (
-                <StatusBlockWithTooltip
+              return (
+                <MachineStatusBar
                   key={i}
                   start={block.start}
                   end={block.end}
                   status={block.status}
                   durationInMinutes={totalMinutes}
+                  showTooltip={showTooltip}
                 />
-              ) : (
-                <div
-                  key={i}
-                  className={`h-full ${statusColorMap[block.status] ?? 'bg-gray-300'} z-10 flex items-center justify-center`}
-                  style={{
-                    width: `${blockWidth}%`,
-                    flexShrink: 0,
-                  }}
-                >
-                  {block.status === 'off' && (
-                    <span className="text-white text-xs font-medium text-center">
-                      {formatDurationHMS(getMinutes(block.start, block.end))}
-                    </span>
-                  )}
-                </div>
-              );
+              )
             })}
           </div>
 
